@@ -1,17 +1,25 @@
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
 
-var Suburb = require("../models/suburb");
+const Address = require("../models/address");
+const propertyController = require("../controllers/propertyController");
+const suburbControler = require("../controllers/suburbController");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
   res.json({ endpoint: "search" });
 });
 
-router.get("/suburbs", (req, res, next) => {
-  Suburb.find({}, (err, suburbs) => {
-    res.json(suburbs);
-  });
+router.get("/suburbs", suburbControler.index);
+
+router.get("/addresses", (req, res, next) => {
+  Address.find({})
+    .populate("suburb")
+    .exec((err, addresses) => {
+      res.json(addresses);
+    });
 });
+
+router.get("/properties", propertyController.index);
 
 module.exports = router;
