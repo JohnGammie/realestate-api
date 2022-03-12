@@ -22,4 +22,6 @@ router.get("/addresses", (req, res, next) => {
 
 router.get("/properties", propertyController.index);
 
+router.get("/properties/suburb/:suburbName", propertyController.searchSuburb);
+
 module.exports = router;
