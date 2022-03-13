@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const propertySchema = new Schema({
   address: { type: mongoose.Schema.Types.ObjectId, ref: "Address" },
-  category: {
+  propertyType: {
     type: String,
     enum: ["House", "Apartment or Unit"],
     required: true,
