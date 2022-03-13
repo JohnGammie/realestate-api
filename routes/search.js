@@ -6,11 +6,7 @@ const propertyController = require("../controllers/propertyController");
 const suburbControler = require("../controllers/suburbController");
 
 /* GET home page. */
-router.get("/", function (req, res, next) {
-  res.json({ endpoint: "search" });
-});
-
-router.post("/", propertyController.fullSearch);
+router.get("/", propertyController.fullSearch);
 
 router.get("/suburbs", suburbControler.index);
 

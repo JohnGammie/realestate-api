@@ -25,26 +25,38 @@ exports.searchSuburb = (req, res) => {
 };
 
 exports.fullSearch = (req, res) => {
-  let listingType = req.body.searchType;
-  let suburbName = req.body.suburbName;
-  let propertyType = req.body.propertyType;
-  let priceMin = req.body.priceMin;
-  let priceMax = req.body.priceMax;
+  let listingType = req.query.searchType;
+  let suburbName = req.query.suburbName;
+  let propertyType = req.query.propertyType;
+  let priceMin = req.query.priceMin;
+  let priceMax = req.query.priceMax;
+
+  const priceMinQuery = () => {
+    if (priceMin !== "0") {
+      return { price: { $gte: priceMin } };
+    }
+    return null;
+  };
+
+  const priceMaxQuery = () => {
+    if (priceMax !== "0") {
+      return { price: { $lte: priceMax } };
+    }
+    return null;
+  };
 
   const propertyTypeQuery = () => {
     if (propertyType !== "Any") {
-      console.log("propertyType is any");
       return { propertyType: propertyType };
     } else {
-      console.log("propertyType is not any");
       return null;
     }
   };
 
   Property.find({})
     .where({ listingType: listingType })
-    .where({ price: { $lte: priceMax } })
-    .where({ price: { $gte: priceMin } })
+    .where(priceMaxQuery())
+    .where(priceMinQuery())
     .where(propertyTypeQuery())
     .populate({
       path: "address",

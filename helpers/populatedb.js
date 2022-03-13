@@ -95,7 +95,7 @@ const createProperties = (cb) => {
         createProperty(addresses[0], "House", "Buy", 300000, cb);
       },
       (cb) => {
-        createProperty(addresses[1], "House", "Rent", 500000, cb);
+        createProperty(addresses[1], "House", "Buy", 500000, cb);
       },
       (cb) => {
         createProperty(addresses[2], "Apartment or Unit", "Rent", 500, cb);
