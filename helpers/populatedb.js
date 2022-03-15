@@ -1,3 +1,11 @@
+// Script for seeding the mongoDB with an initial set of data.
+// Currently the script won't gracefully terminate but will just stop printing to the console
+// the developer can then ctrl+c to end. This is mostly due to asynchronous issues I faced and didn't completely solve.
+
+// Define several suburbs.
+// Create many random addresses, build from an array of {streetNames, streetTypes, streetNumbers, suburbs}
+// Foreach address create property data. {propertyType, listingType, Buy/Rent price}
+
 const mongoose = require("mongoose");
 const async = require("async");
 require("dotenv").config();
@@ -32,11 +40,28 @@ const createSuburb = (name, state, postcode, cb) => {
   saveModel(suburb, "Suburb", suburbs, cb);
 };
 
-const createAddress = (streetName, streetNumber, suburb, cb) => {
+const addressStreetNames = [
+  "Station",
+  "John",
+  "Main",
+  "King",
+  "Queen",
+  "Elizabeth",
+  "William",
+  "High",
+  "Victoria",
+];
+const addressStreetType = ["St", "Rd", "Cl", "Blvd"];
+const createAddress = (cb) => {
   const address = new Address({
-    streetName: streetName,
-    streetNumber: streetNumber,
-    suburb: suburb,
+    streetName:
+      addressStreetNames[
+        Math.floor(Math.random() * addressStreetNames.length)
+      ] +
+      " " +
+      addressStreetType[Math.floor(Math.random() * addressStreetType.length)],
+    streetNumber: Math.floor(Math.random() * 300),
+    suburb: suburbs[Math.floor(Math.random() * suburbs.length)],
   });
   saveModel(address, "Address", addresses, cb);
 };
@@ -75,34 +100,293 @@ const createAddresses = (cb) => {
   async.series(
     [
       (cb) => {
-        createAddress("Station St", "12", suburbs[0], cb);
+        createAddress(cb);
       },
       (cb) => {
-        createAddress("John St", "24", suburbs[0], cb);
+        createAddress(cb);
       },
       (cb) => {
-        createAddress("Bill Road", "32", suburbs[1], cb);
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
+      },
+      (cb) => {
+        createAddress(cb);
       },
     ],
     cb
   );
 };
 
+const propertyTypes = ["House", "Apartment or Unit"];
+const randomPropertyType = () => {
+  return propertyTypes[Math.floor(Math.random() * propertyTypes.length)];
+};
+
+const listingTypes = ["Buy", "Rent", "Sold"];
+const randomListingType = () => {
+  return listingTypes[Math.floor(Math.random() * listingTypes.length)];
+};
+
+const randomBuyPrice = () => {
+  return 50000 + 50000 * Math.floor(Math.random() * 10);
+};
+
+const randomRentPrice = () => {
+  return 200 + 200 * Math.floor(Math.random() * 5);
+};
+
+const randomPrice = (listingType) => {
+  if (listingType === "Rent") {
+    return randomRentPrice();
+  }
+  return randomBuyPrice();
+};
+
+// Definitely async issues caused here by not using callback correctly.
+// Data is still generated but script does not terminate gracefully. Will do for now
 const createProperties = (cb) => {
-  async.series(
-    [
+  addresses.forEach((element, index) => {
+    async.series([
       (cb) => {
-        createProperty(addresses[0], "House", "Buy", 300000, cb);
+        let listingType = randomListingType();
+        createProperty(
+          element,
+          randomPropertyType(),
+          listingType,
+          randomPrice(listingType),
+          cb
+        );
       },
-      (cb) => {
-        createProperty(addresses[1], "House", "Buy", 500000, cb);
-      },
-      (cb) => {
-        createProperty(addresses[2], "Apartment or Unit", "Rent", 500, cb);
-      },
-    ],
-    cb
-  );
+    ]);
+  });
+  return;
 };
 
 // Reset the DB values in this file. Definitely useful while initialy designing models
