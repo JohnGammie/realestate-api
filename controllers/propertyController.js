@@ -30,6 +30,7 @@ exports.fullSearch = (req, res) => {
   let propertyType = req.query.propertyType;
   let priceMin = req.query.priceMin;
   let priceMax = req.query.priceMax;
+  let sort = req.query.sort;
 
   const priceMinQuery = () => {
     if (priceMin !== "0") {
@@ -53,11 +54,21 @@ exports.fullSearch = (req, res) => {
     }
   };
 
+  const sortQuery = () => {
+    if (sort === "ascending") {
+      return { price: "ascending" };
+    } else if (sort === "descending") {
+      return { price: "descending" };
+    }
+    return {};
+  };
+
   Property.find({})
     .where({ listingType: listingType })
     .where(priceMaxQuery())
     .where(priceMinQuery())
     .where(propertyTypeQuery())
+    .sort(sortQuery())
     .populate({
       path: "address",
       populate: { path: "suburb", match: { name: suburbName } },
