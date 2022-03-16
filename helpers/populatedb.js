@@ -22,6 +22,7 @@ db.on("error", console.error.bind(console, "mongo connection error"));
 let suburbs = [];
 let addresses = [];
 let properties = [];
+let agents = [];
 
 const saveModel = (model, modelName, saveCollection, cb) => {
   model.save((err) => {
@@ -33,6 +34,13 @@ const saveModel = (model, modelName, saveCollection, cb) => {
     saveCollection.push(model);
     cb(null, model);
   });
+};
+
+const createAgents = () => {
+  agents.push({ name: "Shane Warne", phoneNumber: "0453045930453" });
+  agents.push({ name: "Robert Plant", phoneNumber: "3465273753457" });
+  agents.push({ name: "Billy Murray", phoneNumber: "1423467882457" });
+  agents.push({ name: "Gary Brown", phoneNumber: "572457245682" });
 };
 
 const createSuburb = (name, state, postcode, cb) => {
@@ -66,12 +74,20 @@ const createAddress = (cb) => {
   saveModel(address, "Address", addresses, cb);
 };
 
-const createProperty = (address, propertyType, listingType, price, cb) => {
+const createProperty = (
+  address,
+  propertyType,
+  listingType,
+  price,
+  agent,
+  cb
+) => {
   const property = new Property({
     address: address,
     propertyType: propertyType,
     listingType: listingType,
     price: price,
+    agent: agent,
   });
   saveModel(property, "Property", properties, cb);
 };
@@ -369,9 +385,15 @@ const randomPrice = (listingType) => {
   return randomBuyPrice();
 };
 
+const randomAgent = () => {
+  return agents[Math.floor(Math.random() * agents.length)];
+};
+
 // Definitely async issues caused here by not using callback correctly.
 // Data is still generated but script does not terminate gracefully. Will do for now
 const createProperties = (cb) => {
+  createAgents();
+
   addresses.forEach((element, index) => {
     async.series([
       (cb) => {
@@ -381,6 +403,7 @@ const createProperties = (cb) => {
           randomPropertyType(),
           listingType,
           randomPrice(listingType),
+          randomAgent(),
           cb
         );
       },
@@ -393,6 +416,7 @@ const createProperties = (cb) => {
 const dropCollections = async () => {
   await db.dropCollection("suburbs");
   await db.dropCollection("addresses");
+  // await db.dropCollection("agents");
   await db.dropCollection("properties");
 };
 

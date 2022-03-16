@@ -10,6 +10,10 @@ const propertySchema = new Schema({
   },
   listingType: { type: String, enum: ["Buy", "Rent", "Sold"], required: true },
   price: { type: Number, required: true },
+  agent: {
+    name: { type: String, required: true },
+    phoneNumber: { type: String, required: true }, // Tried to create agent as a seperate model similar to Address, however run into issues with mongoose.populate in the controller, this will have to do for now
+  },
 });
 
 module.exports = mongoose.model("Property", propertySchema);
