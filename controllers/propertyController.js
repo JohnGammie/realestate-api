@@ -24,6 +24,17 @@ exports.searchSuburb = (req, res) => {
     });
 };
 
+exports.property = (req, res) => {
+  Property.findById(req.params.id)
+    .populate({
+      path: "address",
+      populate: { path: "suburb" },
+    })
+    .exec((err, property) => {
+      res.json(property);
+    });
+};
+
 exports.fullSearch = (req, res) => {
   let listingType = req.query.searchType;
   let suburbName = req.query.suburbName;

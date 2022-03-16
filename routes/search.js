@@ -22,4 +22,6 @@ router.get("/properties", propertyController.index);
 
 router.get("/properties/suburb/:suburbName", propertyController.searchSuburb);
 
+router.get("/property/:id", propertyController.property);
+
 module.exports = router;
