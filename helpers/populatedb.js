@@ -6,6 +6,20 @@
 // Create many random addresses, build from an array of {streetNames, streetTypes, streetNumbers, suburbs}
 // Foreach address create property data. {propertyType, listingType, Buy/Rent price}
 
+const LoremIpsum = require("lorem-ipsum").LoremIpsum;
+// const LoremIpsum = require("lorem-ipsum").LoremIpsum;
+
+const lorem = new LoremIpsum({
+  sentencesPerParagraph: {
+    max: 8,
+    min: 4,
+  },
+  wordsPerSentence: {
+    max: 16,
+    min: 4,
+  },
+});
+
 const mongoose = require("mongoose");
 const async = require("async");
 require("dotenv").config();
@@ -80,6 +94,7 @@ const createProperty = (
   listingType,
   price,
   agent,
+  description,
   cb
 ) => {
   const property = new Property({
@@ -88,6 +103,7 @@ const createProperty = (
     listingType: listingType,
     price: price,
     agent: agent,
+    description: description,
   });
   saveModel(property, "Property", properties, cb);
 };
@@ -389,6 +405,29 @@ const randomAgent = () => {
   return agents[Math.floor(Math.random() * agents.length)];
 };
 
+const generateDescription = () => {
+  let descriptions = [];
+
+  descriptions.push({
+    title: "Beautiful family home",
+    content: lorem.generateSentences(5),
+  });
+  descriptions.push({
+    title: "Great start for young people",
+    content: lorem.generateSentences(5),
+  });
+  descriptions.push({
+    title: "Amazing downsizer",
+    content: lorem.generateSentences(5),
+  });
+  descriptions.push({
+    title: "Close to everything",
+    content: lorem.generateSentences(5),
+  });
+
+  return descriptions[Math.floor(Math.random() * descriptions.length)];
+};
+
 // Definitely async issues caused here by not using callback correctly.
 // Data is still generated but script does not terminate gracefully. Will do for now
 const createProperties = (cb) => {
@@ -404,6 +443,7 @@ const createProperties = (cb) => {
           listingType,
           randomPrice(listingType),
           randomAgent(),
+          generateDescription(),
           cb
         );
       },

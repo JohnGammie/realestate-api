@@ -14,6 +14,10 @@ const propertySchema = new Schema({
     name: { type: String, required: true },
     phoneNumber: { type: String, required: true }, // Tried to create agent as a seperate model similar to Address, however run into issues with mongoose.populate in the controller, this will have to do for now
   },
+  description: {
+    title: { type: String, required: true },
+    content: { type: String, required: true },
+  },
 });
 
 module.exports = mongoose.model("Property", propertySchema);
