@@ -13,8 +13,6 @@ mongoose.connect(mongoDb, { useUnifiedTopology: true, useNewUrlParser: true });
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "mongo connection error"));
 
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
 var searchRouter = require("./routes/search");
 
 var app = express();
@@ -30,8 +28,44 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app._router.use(cors());
 
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
+app.use(cors());
+
+const swaggerJSDoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
+
+const swaggerDefinition = {
+  openapi: "3.0.1",
+  info: {
+    title: "Real estate",
+    version: "1.0.0",
+    description: "An api to access Real estate data",
+  },
+  servers: [
+    {
+      url: "http://localhost:3000",
+      description: "Development server",
+    },
+  ],
+  components: {
+    securitySchemes: {
+      bearerAuth: {
+        type: "http",
+        scheme: "bearer",
+        bearerFormat: "JWT",
+      },
+    },
+  },
+};
+
+const options = {
+  swaggerDefinition,
+  // Paths to files containing OpenAPI definitions
+  apis: ["./routes/*.js"],
+};
+
+const swaggerSpec = swaggerJSDoc(options);
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 app.use("/search", searchRouter);
 
 // catch 404 and forward to error handler

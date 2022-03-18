@@ -51,7 +51,7 @@ const saveModel = (model, modelName, saveCollection, cb) => {
 };
 
 const createAgents = () => {
-  agents.push({ name: "Shane Warne", phoneNumber: "0453045930453" });
+  agents.push({ name: "Todd Palmer", phoneNumber: "0453045930453" });
   agents.push({ name: "Robert Plant", phoneNumber: "3465273753457" });
   agents.push({ name: "Billy Murray", phoneNumber: "1423467882457" });
   agents.push({ name: "Gary Brown", phoneNumber: "572457245682" });
