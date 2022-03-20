@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "startDev": "nodemon ./bin/www"
+    "startDev": "nodemon ./bin/www",
+    "test": "jest"
   },
   "dependencies": {
     "async": "^3.2.3",
@@ -22,6 +23,8 @@
     "swagger-ui-express": "^4.3.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "jest": "^27.5.1",
+    "nodemon": "^2.0.15",
+    "supertest": "^6.2.2"
   }
 }

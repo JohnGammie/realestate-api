@@ -42,6 +42,10 @@ const swaggerDefinition = {
   },
   servers: [
     {
+      url: "https://intense-falls-30642.herokuapp.com",
+      description: "Heroku deployment server",
+    },
+    {
       url: "http://localhost:3000",
       description: "Development server",
     },

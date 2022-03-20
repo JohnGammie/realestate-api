@@ -18,9 +18,19 @@ exports.searchSuburb = (req, res) => {
       // I think populate runs findById and grabs all results,
       // and then attempts to match,leaving non-matching documents with null.
       // Simply filter out of result
-      res.json(
-        properties.filter((property) => property.address.suburb !== null)
-      );
+      if (err) {
+        res.sendStatus(404);
+      } else {
+        let filteredProperties = properties.filter(
+          (property) => property.address.suburb !== null
+        );
+
+        if (filteredProperties.length > 0) {
+          res.json(filteredProperties);
+        } else {
+          res.sendStatus(404);
+        }
+      }
     });
 };
 
@@ -31,7 +41,12 @@ exports.property = (req, res) => {
       populate: { path: "suburb" },
     })
     .exec((err, property) => {
-      res.json(property);
+      console.log(property);
+      if (err || !property) {
+        res.sendStatus(404);
+      } else {
+        res.json(property);
+      }
     });
 };
 
@@ -89,8 +104,13 @@ exports.fullSearch = (req, res) => {
         console.log(err);
         res.sendStatus(400);
       }
-      res.json(
-        properties.filter((property) => property.address.suburb !== null)
+      let filteredProperties = properties.filter(
+        (property) => property.address.suburb !== null
       );
+      if (filteredProperties.length > 0) {
+        res.json(filteredProperties);
+      } else {
+        res.sendStatus(404);
+      }
     });
 };
